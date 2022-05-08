@@ -6,6 +6,7 @@
   "type": "module",
   "scripts": {
     "start": "node dist/index.js",
+    "dev": "yarn build && yarn start",
     "build": "tsc"
   },
   "engines": {
