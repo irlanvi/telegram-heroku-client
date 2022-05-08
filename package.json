@@ -1,0 +1,32 @@
+{
+  "name": "telegram-heroku-client",
+  "version": "1.0.0",
+  "description": "Unofficial Heroku Client for Telegram",
+  "main": "dist/index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node dist/index.js",
+    "build": "tsc"
+  },
+  "engines": {
+    "node": "16.x",
+    "npm": "8.x",
+    "yarn": "1.x"
+  },
+  "keywords": [
+    "heroku",
+    "telegram",
+    "client"
+  ],
+  "author": "Irlan Arvila",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^17.0.31",
+    "nodemon": "^2.0.16",
+    "typescript": "^4.6.4"
+  },
+  "dependencies": {
+    "dotenv": "^16.0.0",
+    "telegraf": "^4.8.1"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "module": "ES2015",
+    "removeComments": true,
+    "moduleResolution": "node",
+    "outDir": "dist/",
+    "allowSyntheticDefaultImports": true
+  }
+}
