@@ -7,7 +7,7 @@
   "scripts": {
     "start": "node dist/index.js",
     "dev": "yarn build && yarn start",
-    "build": "tsc"
+    "build": "rollup --config rollup.config.ts --configPlugin typescript"
   },
   "engines": {
     "node": "16.x",
@@ -22,12 +22,18 @@
   "author": "Irlan Arvila",
   "license": "MIT",
   "devDependencies": {
+    "@rollup/plugin-typescript": "^8.3.2",
+    "@types/heroku-client": "^3.1.0",
     "@types/node": "^17.0.31",
     "nodemon": "^2.0.16",
+    "rollup": "^2.72.1",
+    "tslib": "^2.4.0",
     "typescript": "^4.6.4"
   },
   "dependencies": {
+    "dayjs": "^1.11.2",
     "dotenv": "^16.0.0",
+    "heroku-client": "^3.1.0",
     "telegraf": "^4.8.1"
   }
 }

@@ -1,21 +1,19 @@
-import { Markup, Telegraf } from "telegraf";
+import { Telegraf } from "telegraf";
 import "dotenv/config";
+import start from "./cmd/start";
+import account from "./lib/account";
 
-const bot = new Telegraf(process.env.BOT_TOKEN);
-bot.start((ctx) => {
-  ctx.replyWithHTML(
-    `I can help you create and manage Heroku apps 
+const tgHerokuClient = new Telegraf(process.env.BOT_TOKEN);
 
-<strong>Go to heroku and get your heroku api key</strong>`,
-    Markup.inlineKeyboard([
-      Markup.button.url(
-        "Heroku API",
-        "https://dashboard.heroku.com/account/applications/authorizations/new"
-      ),
-    ])
-  );
-});
-bot.launch();
+await start(tgHerokuClient);
+await account(tgHerokuClient);
 
-process.once("SIGINT", () => bot.stop("SIGINT"));
-process.once("SIGTERM", () => bot.stop("SIGTERM"));
+// tgHerokuClient.action('hh', (h) => {
+//    h.editMessageReplyMarkup()
+//    h.editMessageText()
+// })
+
+tgHerokuClient.launch();
+
+process.once("SIGINT", () => tgHerokuClient.stop("SIGINT"));
+process.once("SIGTERM", () => tgHerokuClient.stop("SIGTERM"));
