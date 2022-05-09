@@ -2,16 +2,13 @@ import { Telegraf } from "telegraf";
 import "dotenv/config";
 import start from "./cmd/start";
 import account from "./lib/account";
+import backToMainMenu from "./lib/backToMainMenu";
 
 const tgHerokuClient = new Telegraf(process.env.BOT_TOKEN);
 
 await start(tgHerokuClient);
 await account(tgHerokuClient);
-
-// tgHerokuClient.action('hh', (h) => {
-//    h.editMessageReplyMarkup()
-//    h.editMessageText()
-// })
+await backToMainMenu(tgHerokuClient);
 
 tgHerokuClient.launch();
 

@@ -1,53 +1,20 @@
 import Heroku from "heroku-client";
-import dayjs from "dayjs";
-import { deunionize, Markup } from "telegraf";
+import { deunionize } from "telegraf";
 import store from "../store";
+import mainMenu from "../ext/mainMenu";
 
-async function herokuAuthenticationn(tgHerokuClient) {
+async function herokuAuthentication(tgHerokuClient) {
   tgHerokuClient.on("message", (ctx) => {
     const heroku = new Heroku({ token: deunionize(ctx.message).text });
 
     heroku
       .get("/account")
       .then((res) => {
-        const timeFormat = "DD MMMM YYYY hh:mm A";
         store.isLogin[deunionize(ctx.message).chat.id] = true;
         store.currentUser[deunionize(ctx.message).chat.id] = heroku;
+        store.currentUserAccount[deunionize(ctx.message).chat.id] = res;
 
-        ctx.telegram.sendMessage(
-          deunionize(ctx.message).chat.id,
-          `<i>Successfully logged in as ${
-            res.email
-          }</i>\n\n<strong>Name:</strong> <code>${
-            res.name
-          }</code>\n<strong>Account ID:</strong> <code>${
-            res.id
-          }</code>\n<strong>Residence:</strong> <code>${
-            res.country_of_residence
-          }</code>\n\n<strong>Created at:</strong> <code>${dayjs(
-            res.created_at
-          ).format(
-            timeFormat
-          )}</code>\n<strong>Last login:</strong> <code>${dayjs(
-            res.last_login
-          ).format(timeFormat)}</code>\n\nPowered by @${
-            process.env.CHANNEL_USERNAME
-          } ⚡️`,
-          {
-            parse_mode: "HTML",
-            reply_markup: Markup.inlineKeyboard([
-              [Markup.button.callback("Account", "account")],
-              [
-                Markup.button.callback("Apps", "apps"),
-                Markup.button.callback("Deploy", "deploy"),
-              ],
-              [
-                Markup.button.callback("Dyno", "dyno"),
-                Markup.button.callback("Teams", "teams"),
-              ],
-            ]).reply_markup,
-          }
-        );
+        mainMenu(ctx, res);
       })
       .catch((err) => {
         // https://devcenter.heroku.com/articles/platform-api-reference#error-responses
@@ -79,4 +46,4 @@ async function herokuAuthenticationn(tgHerokuClient) {
   });
 }
 
-export default herokuAuthenticationn;
+export default herokuAuthentication;
